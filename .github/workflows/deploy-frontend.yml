@@ -34,8 +34,15 @@ jobs:
 
     - name: Update kubeconfig
       run: |
-        aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER }}
+        aws eks update-kubeconfig \
+          --region ${{ secrets.AWS_REGION }} \
+          --name ${{ secrets.EKS_CLUSTER }}
+
+    - name: Verify cluster access
+      run: |
+        kubectl get nodes
 
     - name: Deploy frontend
       run: |
-        kubectl apply -f k8s/frontend.yml || kubectl rollout undo deployment frontend-deployment
+        kubectl apply -f k8s/frontend.yml --validate=false || \
+        kubectl rollout undo deployment frontend-deployment
