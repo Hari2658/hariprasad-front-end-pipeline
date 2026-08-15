@@ -38,4 +38,4 @@ jobs:
 
     - name: Deploy frontend
       run: |
-        kubectl apply -f k8s/frontend.yaml || kubectl rollout undo deployment frontend-deployment
+        kubectl apply -f k8s/frontend.yml || kubectl rollout undo deployment frontend-deployment
